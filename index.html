@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KLINIK UMKT CARE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Style.css">
+    <script src="auth.js"></script>
+    <script>wajibLogin();</script>
+    <script src="script.js" defer></script>
+</head>
+<body class="halaman-app">
+    <div class="app">
+        <aside class="sidebar" id="sidebar" aria-label="Menu utama">
+            <div class="brand">
+                <span class="logo" aria-hidden="true"></span>
+                <div><strong>UMKT CARE</strong><small>Sistem Informasi Klinik</small></div>
+            </div>
+
+            <nav class="menu">
+                <button class="nav-button aktif-nav" data-judul="Dashboard" onclick="bukaHalaman('dashboard', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-button" data-judul="Pendaftaran Pasien" onclick="bukaHalaman('pendaftaran', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+                    <span>Pendaftaran</span>
+                </button>
+                <button class="nav-button" data-judul="Pemeriksaan Dokter" onclick="bukaHalaman('pemeriksaan', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6 6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6 6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>
+                    <span>Pemeriksaan Dokter</span>
+                </button>
+                <button class="nav-button" data-judul="Pembayaran &amp; Nota" onclick="bukaHalaman('pembayaran', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l3-2 2.5 2L12 20l2.5 2L17 20l3 2V2l-3 2-2.5-2L12 4 9.5 2 7 4z"/><path d="M8 9h8M8 13h8"/></svg>
+                    <span>Pembayaran &amp; Nota</span>
+                </button>
+                <button class="nav-button" data-judul="Data Pasien" onclick="bukaHalaman('pasien', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Data Pasien</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-bawah">
+                <div class="admin">
+                    <span class="avatar" id="avatarAdmin" aria-hidden="true">A</span>
+                    <div><strong id="namaAdmin">Administrator</strong><small>Admin klinik</small></div>
+                </div>
+                <button type="button" class="tombol-keluar" id="tombolKeluar">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>
+                    <span>Keluar</span>
+                </button>
+            </div>
+        </aside>
+        <div class="overlay" id="overlay"></div>
+
+        <div class="konten">
+            <header class="topbar">
+                <button type="button" class="tombol-ikon tombol-menu" id="tombolMenu" aria-label="Buka menu" aria-controls="sidebar" aria-expanded="false">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+                <h1 id="judulHalaman">Dashboard</h1>
+                <time id="tanggalHariIni" class="tanggal"></time>
+            </header>
+
+            <main>
+                <section id="dashboard" class="halaman aktif">
+                    <div class="sapaan">
+                        <h2 id="sapaan">Selamat datang</h2>
+                        <p>Ringkasan antrean dan layanan klinik hari ini.</p>
+                    </div>
+
+                    <div class="statistik">
+                        <div class="kartu">
+                            <span class="ikon-kartu teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+                            <div><p>Total pasien</p><h2 id="jumlahPasien">0</h2></div>
+                        </div>
+                        <div class="kartu">
+                            <span class="ikon-kartu hijau"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></span>
+                            <div><p>Sudah diperiksa</p><h2 id="jumlahPeriksa">0</h2></div>
+                        </div>
+                        <div class="kartu">
+                            <span class="ikon-kartu amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+                            <div><p>Menunggu</p><h2 id="jumlahMenunggu">0</h2></div>
+                        </div>
+                    </div>
+
+                    <div class="dua-kolom">
+                        <div class="panel">
+                            <h3 class="judul-panel">Antrean per poli</h3>
+                            <div id="antreanPoli" class="daftar-poli"></div>
+                        </div>
+                        <div class="panel">
+                            <h3 class="judul-panel">Tarif layanan</h3>
+                            <dl class="daftar-tarif">
+                                <div><dt>Pendaftaran</dt><dd id="tarifDaftar">Rp 20.000</dd></div>
+                                <div><dt>Pemeriksaan dokter</dt><dd id="tarifPeriksa">Rp 50.000</dd></div>
+                                <div><dt>Obat (standar)</dt><dd id="tarifObat">Rp 25.000</dd></div>
+                            </dl>
+                            <p class="catatan">Tarif obat dapat diubah dokter saat pemeriksaan.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="pendaftaran" class="halaman">
+                    <div class="panel">
+                        <h2 class="judul-panel">Data pasien baru</h2>
+                        <form id="formPendaftaran">
+                            <div class="form-grid">
+                                <div class="field">
+                                    <label for="nama">Nama pasien</label>
+                                    <input id="nama" required placeholder="Masukkan nama lengkap" autocomplete="off">
+                                </div>
+                                <div class="field">
+                                    <label for="nik">NIK (16 digit)</label>
+                                    <input id="nik" required maxlength="16" pattern="[0-9]{16}" inputmode="numeric" placeholder="Masukkan NIK" autocomplete="off">
+                                </div>
+                                <div class="field">
+                                    <label for="poli">Poli tujuan</label>
+                                    <select id="poli" required>
+                                        <option value="">Pilih poli</option>
+                                        <option>Poli Umum</option>
+                                        <option>Poli Gigi</option>
+                                        <option>Poli Anak</option>
+                                        <option>Poli Penyakit Dalam</option>
+                                        <option>Poli Mata</option>
+                                        <option>Poli Saraf</option>
+                                    </select>
+                                    <div id="infoKodePoli" class="info-kode">Kode poli akan tampil setelah poli dipilih.</div>
+                                </div>
+                                <div class="field penuh">
+                                    <label for="keluhan">Keluhan pasien</label>
+                                    <textarea id="keluhan" required placeholder="Tuliskan keluhan pasien"></textarea>
+                                </div>
+                            </div>
+                            <div class="aksi-form">
+                                <button class="tombol utama" type="submit">Daftarkan pasien</button>
+                            </div>
+                        </form>
+                        <div id="hasilPendaftaran" aria-live="polite"></div>
+                    </div>
+                </section>
+
+                <section id="pemeriksaan" class="halaman">
+                    <div class="dua-kolom lebar-kiri">
+                        <div class="panel">
+                            <h2 class="judul-panel">Hasil pemeriksaan</h2>
+                            <form id="formPemeriksaan">
+                                <div class="field">
+                                    <label for="pilihPasien">Pilih pasien</label>
+                                    <select id="pilihPasien" required><option value="">Pilih pasien</option></select>
+                                </div>
+                                <div class="field">
+                                    <label for="diagnosis">Diagnosis</label>
+                                    <input id="diagnosis" required placeholder="Diagnosis dokter">
+                                </div>
+                                <div class="field">
+                                    <label for="tindakan">Tindakan</label>
+                                    <input id="tindakan" required placeholder="Tindakan medis">
+                                </div>
+                                <div class="field">
+                                    <label for="obat">Obat dan aturan penggunaan</label>
+                                    <textarea id="obat" required placeholder="Nama obat dan aturan penggunaan"></textarea>
+                                </div>
+                                <div class="field">
+                                    <label for="biayaObatInput">Tarif obat (Rp)</label>
+                                    <input id="biayaObatInput" type="number" min="0" step="1000" required value="25000" placeholder="Masukkan tarif obat">
+                                </div>
+                                <div class="aksi-form">
+                                    <button class="tombol utama" type="submit">Simpan pemeriksaan</button>
+                                </div>
+                            </form>
+                        </div>
+                        <aside class="panel panel-info">
+                            <h3 class="judul-panel">Data pasien</h3>
+                            <div id="infoPasien" class="info"></div>
+                        </aside>
+                    </div>
+                </section>
+
+                <section id="pembayaran" class="halaman">
+                    <div class="panel">
+                        <h2 class="judul-panel">Pembayaran dan cetak nota</h2>
+                        <div class="field maks">
+                            <label for="pilihPembayaran">Pilih pasien</label>
+                            <select id="pilihPembayaran"><option value="">Pilih pasien</option></select>
+                        </div>
+                        <div id="nota"></div>
+                    </div>
+                </section>
+
+                <section id="pasien" class="halaman">
+                    <div class="panel">
+                        <div class="kepala-panel">
+                            <div>
+                                <h2 class="judul-panel">Daftar pasien</h2>
+                                <p class="keterangan-antrean">Kode antrean dibuat terpisah untuk setiap poli, misalnya PU-001 untuk Poli Umum dan PG-001 untuk Poli Gigi.</p>
+                            </div>
+                            <div class="cari">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                                <input id="pencarian" type="search" placeholder="Cari nama, NIK, atau antrean" aria-label="Cari data pasien">
+                            </div>
+                        </div>
+                        <div class="aksi-data">
+                            <span class="info-simpan" id="infoSimpan">Tersimpan otomatis di browser ini.</span>
+                            <div class="grup-tombol">
+                                <button type="button" class="tombol sekunder kecil" id="tombolEkspor">Unduh cadangan</button>
+                                <button type="button" class="tombol sekunder kecil" id="tombolImpor">Pulihkan dari cadangan</button>
+                                <input type="file" id="fileImpor" accept=".json,application/json" hidden>
+                            </div>
+                        </div>
+                        <div class="tabel-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Antrean</th><th>Pasien</th><th>Kode poli</th><th>Poli</th><th>Status</th><th>Total</th><th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabelPasien"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer>&copy; 2026 KLINIK UMKT CARE | Sistem Informasi Klinik UMKT CARE</footer>
+        </div>
+    </div>
+
+    <dialog id="dialogKeluar" class="dialog">
+        <h3>Keluar dari akun?</h3>
+        <p>Anda akan kembali ke halaman login. Data pasien tetap tersimpan di browser ini.</p>
+        <div class="dialog-aksi">
+            <button type="button" class="tombol sekunder" id="batalKeluar">Batal</button>
+            <button type="button" class="tombol bahaya" id="yakinKeluar">Keluar</button>
+        </div>
+    </dialog>
+
+    <div id="toastArea" class="toast-area" aria-live="polite"></div>
+</body>
+</html>

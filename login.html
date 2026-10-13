@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk Admin | KLINIK UMKT CARE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Style.css">
+    <script src="auth.js"></script>
+    <script>if (bacaSesi()) location.replace("index.html");</script>
+</head>
+<body class="halaman-login">
+    <div class="login-layout">
+        <section class="login-brand" aria-hidden="false">
+            <div class="brand">
+                <span class="logo" aria-hidden="true"></span>
+                <div><strong>UMKT CARE</strong><small>Sistem Informasi Klinik</small></div>
+            </div>
+            <div class="login-pesan">
+                <h1>Pendaftaran, pemeriksaan, dan nota dalam satu tempat.</h1>
+                <p>Kelola antrean tiap poli, catat hasil pemeriksaan dokter, dan cetak nota pembayaran tanpa berpindah aplikasi.</p>
+            </div>
+            <ul class="login-fakta">
+                <li><strong>6</strong><span>poli aktif</span></li>
+                <li><strong>Rp 95.000</strong><span>tarif standar per kunjungan</span></li>
+            </ul>
+        </section>
+
+        <section class="login-panel">
+            <form id="formLogin" class="login-kartu" novalidate>
+                <h2>Masuk sebagai admin</h2>
+                <p class="login-sub">Gunakan akun admin untuk membuka sistem klinik.</p>
+
+                <div id="pesanLogin" class="pesan-error" role="alert" hidden></div>
+
+                <div class="field">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Masukkan username" required>
+                </div>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <div class="input-aksi">
+                        <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Masukkan password" required>
+                        <button type="button" id="tombolLihat" class="tombol-ikon" aria-label="Tampilkan password" aria-pressed="false">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <label class="centang"><input type="checkbox" id="tetapMasuk"> Tetap masuk di perangkat ini</label>
+
+                <button class="tombol utama penuh" type="submit">Masuk</button>
+            </form>
+            <p class="login-footer">&copy; 2026 KLINIK UMKT CARE</p>
+        </section>
+    </div>
+
+    <script>
+        const form = document.getElementById("formLogin");
+        const pesan = document.getElementById("pesanLogin");
+        const inputPassword = document.getElementById("password");
+        const tombolLihat = document.getElementById("tombolLihat");
+
+        tombolLihat.addEventListener("click", () => {
+            const tampil = inputPassword.type === "password";
+            inputPassword.type = tampil ? "text" : "password";
+            tombolLihat.setAttribute("aria-pressed", String(tampil));
+            tombolLihat.setAttribute("aria-label", tampil ? "Sembunyikan password" : "Tampilkan password");
+        });
+
+        form.addEventListener("submit", e => {
+            e.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = inputPassword.value;
+            if (!username.trim() || !password) {
+                pesan.textContent = "Isi username dan password terlebih dahulu.";
+                pesan.hidden = false;
+                return;
+            }
+            if (prosesLogin(username, password, document.getElementById("tetapMasuk").checked)) {
+                location.replace("index.html");
+            } else {
+                pesan.textContent = "Username atau password salah. Periksa lagi lalu coba kembali.";
+                pesan.hidden = false;
+                inputPassword.select();
+            }
+        });
+    </script>
+</body>
+</html>
